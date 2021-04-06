@@ -45,6 +45,23 @@ class RoamPrivateApi {
 		}, query );
 	}
 
+
+	async updateBlock( text, uid ) {
+		const ret = await this.page.evaluate( ( text, uid  ) => {
+			if ( ! window.roamAlphaAPI ) {
+				return Promise.reject( 'No Roam API detected' );
+			}
+			console.log( "IT LIVES" );
+			 const result = window.roamAlphaAPI.updateBlock(
+			 	{ block: { string: text, uid: uid } });
+
+			console.log( result );
+
+			return Promise.resolve( result );
+		}, text, uid );
+		return ret
+	}
+
 	/**
 	 * Create a block as a child of block.
 	 * @param {string} text 
